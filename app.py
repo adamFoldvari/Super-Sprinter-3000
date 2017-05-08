@@ -29,31 +29,29 @@ def list_page():
     return render_template("list.html", story_list=readed_story_list)
 
 
-@app.route('/story', methods=['GET'])
+@app.route('/story', methods=['GET', 'POST'])
 def story_page(story_id=None):
-    empyt_list = []
-    for i in range(7):
-        empyt_list.append(' ')
-    return render_template('form.html', story_id=story_id, data_to_edit=empyt_list)
-
-
-@app.route('/story', methods=['POST'])
-def add_story():
-    story_list = read_data_from_csv('story_list.csv')
-    new_row = [str(len(story_list)+1)]
-    form_elements = [
-                    "story_title",
-                    "user_story",
-                    "acceptance_criteria",
-                    "business_value",
-                    "estimation",
-                    "status"
-                    ]
-    for element in form_elements:
-        new_row.append(request.form[element])
-    story_list.append(new_row)
-    add_data_to_csv('story_list.csv', story_list)
-    return redirect(url_for('list_page'))
+    if request.method == 'GET':
+        empyt_list = []
+        for i in range(7):
+            empyt_list.append(' ')
+        return render_template('form.html', story_id=story_id, data_to_edit=empyt_list)
+    else:
+        story_list = read_data_from_csv('story_list.csv')
+        new_row = [str(len(story_list)+1)]
+        form_elements = [
+                        "story_title",
+                        "user_story",
+                        "acceptance_criteria",
+                        "business_value",
+                        "estimation",
+                        "status"
+                        ]
+        for element in form_elements:
+            new_row.append(request.form[element])
+        story_list.append(new_row)
+        add_data_to_csv('story_list.csv', story_list)
+        return redirect(url_for('list_page'))
 
 
 @app.route('/story/<story_id>')
