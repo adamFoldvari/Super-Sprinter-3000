@@ -84,7 +84,7 @@ def update_data(story_id):
     return redirect(url_for('list_page'))
 
 
-@app.route('/story/<story_id>/delete/')
+@app.route('/story/delete/<story_id>')
 def delete_story(story_id):
     story_list = read_data_from_csv('story_list.csv')
     for row in story_list:
