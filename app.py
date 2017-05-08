@@ -39,7 +39,6 @@ def story_page(story_id=None):
 
 @app.route('/story', methods=['POST'])
 def add_story():
-
     story_list = read_data_from_csv('story_list.csv')
     new_row = [str(len(story_list)+1)]
     form_elements = [
@@ -69,14 +68,18 @@ def update_strory(story_id):
 @app.route('/story/update/<story_id>', methods=['POST'])
 def update_data(story_id):
     story_list = read_data_from_csv('story_list.csv')
+    form_elements = [
+                    "story_title",
+                    "user_story",
+                    "acceptance_criteria",
+                    "business_value",
+                    "estimation",
+                    "status"
+                    ]
     for index in range(len(story_list)):
         if story_id == story_list[index][0]:
-            story_list[index][1] = request.form["story_title"]
-            story_list[index][2] = request.form["user_story"]
-            story_list[index][3] = request.form["acceptance_criteria"]
-            story_list[index][4] = request.form["business_value"]
-            story_list[index][5] = request.form["estimation"]
-            story_list[index][6] = request.form["status"]
+            for num, element in enumerate(form_elements):
+                story_list[index][num+1] = request.form[element]
     add_data_to_csv('story_list.csv', story_list)
     return redirect(url_for('list_page'))
 
