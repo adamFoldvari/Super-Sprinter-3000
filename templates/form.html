@@ -17,7 +17,8 @@
     <form action='/story' method='POST'>
     {% endif %}
         <label for="story_title">Story Title</label>
-        <p><textarea rows="1" cols="45" name="story_title" id="story_title" required>{{ data_to_edit[1] }}</textarea></p>
+        <p><input type="text" name="story_title" id="story_title" required value="{{ data_to_edit[1] }}"></p>
+        
 
         <label for="user_story">User Story</label>
         <p><textarea rows="5" cols="45" name="user_story" id="user_story" required>{{ data_to_edit[2] }}</textarea></p>
